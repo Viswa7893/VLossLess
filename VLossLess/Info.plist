@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Basic App Information -->
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	
+	<key>CFBundleDisplayName</key>
+	<string>VLossLess</string>
+	
+	<key>CFBundlePackageType</key>
+	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+	
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	
+	<!-- macOS Specific -->
+	<key>LSMinimumSystemVersion</key>
+	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	
+	<key>NSMainStoryboardFile</key>
+	<string>Main</string>
+	
+	<!-- Permissions and Usage Descriptions -->
+	<key>NSUserNotificationsUsageDescription</key>
+	<string>VLossLess needs to show notifications when video compression is complete so you know when your files are ready.</string>
+	
+	<!-- Supported Document Types -->
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Video File</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>public.movie</string>
+				<string>public.video</string>
+				<string>public.mpeg-4</string>
+				<string>com.apple.quicktime-movie</string>
+				<string>public.avi</string>
+				<string>org.matroska.mkv</string>
+			</array>
+		</dict>
+	</array>
+	
+	<!-- Exported Type Identifiers (Optional but good practice) -->
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.movie</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>Video File</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.vlossless.video</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>mp4</string>
+					<string>mov</string>
+					<string>avi</string>
+					<string>mkv</string>
+					<string>m4v</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	
+	<!-- App Category -->
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.video</string>
+	
+	<!-- App Icon -->
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	
+	<!-- High Resolution Capable -->
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	
+	<!-- Support for Dark Mode -->
+	<key>NSRequiresAquaSystemAppearance</key>
+	<false/>
+	
+	<!-- Disable Automatic Termination -->
+	<key>NSSupportsSuddenTermination</key>
+	<false/>
+	
+	<!-- Enable App Nap -->
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<false/>
+	</dict>
+</dict>
+</plist>
