@@ -11,7 +11,7 @@ import SwiftUI
 struct VLossLessApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainVideoView()
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)

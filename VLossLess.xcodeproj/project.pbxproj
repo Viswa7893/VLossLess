@@ -7,20 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C2BDD7A2ECC4DEC00B004FA /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BDD772ECC4DEC00B004FA /* ContentView.swift */; };
+		1C2BDD7A2ECC4DEC00B004FA /* MainVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BDD772ECC4DEC00B004FA /* MainVideoView.swift */; };
 		1C2BDD7B2ECC4DEC00B004FA /* VLossLessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BDD782ECC4DEC00B004FA /* VLossLessApp.swift */; };
 		1C2BDD7C2ECC4DEC00B004FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C2BDD762ECC4DEC00B004FA /* Assets.xcassets */; };
-		1C2BDD822ECC55F500B004FA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C2BDD812ECC55F500B004FA /* Info.plist */; };
 		1C2BDD842ECC796800B004FA /* VideoCompressionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BDD832ECC796800B004FA /* VideoCompressionManager.swift */; };
+		1C2BDD872ECCA04400B004FA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1C2BDD812ECC55F500B004FA /* Info.plist */; };
+		1C2BDD892ECCA3B900B004FA /* VideoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C2BDD882ECCA3B900B004FA /* VideoItem.swift */; };
+		1C2BDD8C2ECCA51F00B004FA /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 1C2BDD8B2ECCA51F00B004FA /* ZIPFoundation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C2BDD682ECC4DDF00B004FA /* VLossLess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VLossLess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C2BDD762ECC4DEC00B004FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1C2BDD772ECC4DEC00B004FA /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		1C2BDD772ECC4DEC00B004FA /* MainVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVideoView.swift; sourceTree = "<group>"; };
 		1C2BDD782ECC4DEC00B004FA /* VLossLessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLossLessApp.swift; sourceTree = "<group>"; };
 		1C2BDD812ECC55F500B004FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C2BDD832ECC796800B004FA /* VideoCompressionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCompressionManager.swift; sourceTree = "<group>"; };
+		1C2BDD882ECCA3B900B004FA /* VideoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -28,6 +31,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C2BDD8C2ECCA51F00B004FA /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,7 +59,8 @@
 			children = (
 				1C2BDD812ECC55F500B004FA /* Info.plist */,
 				1C2BDD762ECC4DEC00B004FA /* Assets.xcassets */,
-				1C2BDD772ECC4DEC00B004FA /* ContentView.swift */,
+				1C2BDD882ECCA3B900B004FA /* VideoItem.swift */,
+				1C2BDD772ECC4DEC00B004FA /* MainVideoView.swift */,
 				1C2BDD782ECC4DEC00B004FA /* VLossLessApp.swift */,
 				1C2BDD832ECC796800B004FA /* VideoCompressionManager.swift */,
 			);
@@ -79,6 +84,7 @@
 			);
 			name = VLossLess;
 			packageProductDependencies = (
+				1C2BDD8B2ECCA51F00B004FA /* ZIPFoundation */,
 			);
 			productName = VLossLess;
 			productReference = 1C2BDD682ECC4DDF00B004FA /* VLossLess.app */;
@@ -108,6 +114,9 @@
 			);
 			mainGroup = 1C2BDD5F2ECC4DDF00B004FA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1C2BDD8A2ECCA51F00B004FA /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1C2BDD692ECC4DDF00B004FA /* Products */;
 			projectDirPath = "";
@@ -124,7 +133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1C2BDD7C2ECC4DEC00B004FA /* Assets.xcassets in Resources */,
-				1C2BDD822ECC55F500B004FA /* Info.plist in Resources */,
+				1C2BDD872ECCA04400B004FA /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,8 +144,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C2BDD892ECCA3B900B004FA /* VideoItem.swift in Sources */,
 				1C2BDD842ECC796800B004FA /* VideoCompressionManager.swift in Sources */,
-				1C2BDD7A2ECC4DEC00B004FA /* ContentView.swift in Sources */,
+				1C2BDD7A2ECC4DEC00B004FA /* MainVideoView.swift in Sources */,
 				1C2BDD7B2ECC4DEC00B004FA /* VLossLessApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -374,6 +384,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1C2BDD8A2ECCA51F00B004FA /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.20;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1C2BDD8B2ECCA51F00B004FA /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1C2BDD8A2ECCA51F00B004FA /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1C2BDD602ECC4DDF00B004FA /* Project object */;
 }
