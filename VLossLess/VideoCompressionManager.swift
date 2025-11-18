@@ -10,7 +10,6 @@ import AVFoundation
 import AppKit
 import UniformTypeIdentifiers
 import UserNotifications
-import ZIPFoundation
 import Combine
 
 enum QualityPreset: String, CaseIterable {
@@ -28,8 +27,8 @@ enum QualityPreset: String, CaseIterable {
     
     var compressionRatio: Float {
         switch self {
-        case .high: return 0.75      // 75% - minimal quality loss
-        case .balanced: return 0.65  // 65% - good balance
+        case .high: return 0.85      // 85% - minimal quality loss
+        case .balanced: return 0.70  // 70% - good balance
         case .smaller: return 0.50   // 50% - more compression but still decent
         }
     }
@@ -390,8 +389,8 @@ final class BatchCompressionManager: NSObject, ObservableObject {
         }
     }
     
-    // MARK: - Save as ZIP
-    func saveAllAsZip() {
+    // MARK: - Save All to Folder
+    func saveAllToFolder() {
         let completedItems = videoItems.filter { $0.status == .completed && $0.compressedURL != nil }
         
         guard !completedItems.isEmpty else {
@@ -402,48 +401,60 @@ final class BatchCompressionManager: NSObject, ObservableObject {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
             
-            let savePanel = NSSavePanel()
-            savePanel.allowedContentTypes = [UTType.zip]
-            savePanel.nameFieldStringValue = "compressed_videos_\(Date().timeIntervalSince1970).zip"
-            savePanel.canCreateDirectories = true
+            let panel = NSOpenPanel()
+            panel.canChooseDirectories = true
+            panel.canChooseFiles = false
+            panel.canCreateDirectories = true
+            panel.message = "Choose folder to save compressed videos"
+            panel.prompt = "Save Here"
             
-            savePanel.begin { response in
-                if response == .OK, let destinationURL = savePanel.url {
-                    self.createZipFile(items: completedItems, destination: destinationURL)
+            panel.begin { response in
+                if response == .OK, let destinationFolder = panel.url {
+                    self.saveFilesToFolder(items: completedItems, folder: destinationFolder)
                 }
             }
         }
     }
     
-    private func createZipFile(items: [VideoItem], destination: URL) {
+    private func saveFilesToFolder(items: [VideoItem], folder: URL) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             
-            do {
-                // Remove existing file if any
-                try? FileManager.default.removeItem(at: destination)
+            var savedCount = 0
+            var errors: [String] = []
+            
+            for item in items {
+                guard let sourceURL = item.compressedURL else { continue }
                 
-                // Create ZIP archive
-                guard let archive = Archive(url: destination, accessMode: .create) else {
-                    throw NSError(domain: "ZIP", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to create archive"])
-                }
+                let fileName = item.fileName.replacingOccurrences(of: " ", with: "_")
+                let destinationURL = folder.appendingPathComponent("compressed_\(fileName)")
                 
-                for item in items {
-                    guard let sourceURL = item.compressedURL else { continue }
+                do {
+                    // Remove existing file if present
+                    if FileManager.default.fileExists(atPath: destinationURL.path) {
+                        try FileManager.default.removeItem(at: destinationURL)
+                    }
                     
-                    let fileName = item.fileName.replacingOccurrences(of: " ", with: "_")
-                    let zipFileName = "compressed_\(fileName)"
-                    
-                    try archive.addEntry(with: zipFileName, relativeTo: sourceURL.deletingLastPathComponent())
+                    // Copy compressed video
+                    try FileManager.default.copyItem(at: sourceURL, to: destinationURL)
+                    savedCount += 1
+                } catch {
+                    errors.append("\(fileName): \(error.localizedDescription)")
                 }
-                
-                DispatchQueue.main.async {
-                    self.showNotification(title: "ZIP Created", body: "Compressed videos saved successfully!")
-                    NSWorkspace.shared.activateFileViewerSelecting([destination])
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self.showNotification(title: "ZIP Failed", body: "Failed to create ZIP: \(error.localizedDescription)")
+            }
+            
+            DispatchQueue.main.async {
+                if errors.isEmpty {
+                    self.showNotification(
+                        title: "Videos Saved",
+                        body: "Successfully saved \(savedCount) compressed video\(savedCount == 1 ? "" : "s")!"
+                    )
+                    NSWorkspace.shared.activateFileViewerSelecting([folder])
+                } else {
+                    self.showNotification(
+                        title: "Partial Save",
+                        body: "Saved \(savedCount) videos. \(errors.count) failed."
+                    )
                 }
             }
         }

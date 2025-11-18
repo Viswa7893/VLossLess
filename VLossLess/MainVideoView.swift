@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  MainVideoView.swift
 //  VLossLess - Enhanced with Stunning Animations
 //
 
@@ -26,9 +26,7 @@ struct MainVideoView: View {
                 
                 // Main content area
                 if batchManager.videoItems.isEmpty {
-                    EmptyStateView(onSelectFiles: {
-                        batchManager.selectMultipleVideos()
-                    })
+                    EmptyStateView(batchManager: batchManager)
                 } else {
                     VideoListView(batchManager: batchManager)
                 }
@@ -154,8 +152,9 @@ struct HeaderView: View {
 
 // MARK: - Empty State
 struct EmptyStateView: View {
+    @ObservedObject var batchManager: BatchCompressionManager
     @State private var pulseAnimation = false
-    let onSelectFiles: () -> Void
+    @State private var hoveredButton: String?
     
     var body: some View {
         VStack(spacing: 30) {
@@ -195,26 +194,35 @@ struct EmptyStateView: View {
                     .foregroundColor(.white.opacity(0.6))
             }
             
-            Button(action: onSelectFiles) {
-                HStack(spacing: 10) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.system(size: 18))
-                    Text("Select Videos")
-                        .font(.system(size: 18, weight: .bold))
-                }
-                .foregroundColor(.white)
-                .frame(width: 200, height: 50)
-                .background(
-                    LinearGradient(
-                        colors: [.purple, .blue],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .cornerRadius(14)
-                .shadow(color: .blue.opacity(0.5), radius: 20)
+//            Button(action: onSelectFiles) {
+//                HStack(spacing: 10) {
+//                    Image(systemName: "plus.circle.fill")
+//                        .font(.system(size: 18))
+//                    Text("Select Videos")
+//                        .font(.system(size: 18, weight: .bold))
+//                }
+//                .foregroundColor(.white)
+//                .frame(width: 200, height: 50)
+//                .background(
+//                    LinearGradient(
+//                        colors: [.purple, .blue],
+//                        startPoint: .leading,
+//                        endPoint: .trailing
+//                    )
+//                )
+//                .cornerRadius(14)
+//                .shadow(color: .blue.opacity(0.5), radius: 20)
+//            }
+//            .buttonStyle(PlainButtonStyle())
+            ActionButton(
+                icon: "plus.circle.fill",
+                title: "Select Videos",
+                gradient: [.blue, .purple],
+                isHovered: hoveredButton == "select"
+            ) {
+                batchManager.selectMultipleVideos()
             }
-            .buttonStyle(PlainButtonStyle())
+            .onHover { hoveredButton = $0 ? "select" : nil }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -249,7 +257,7 @@ struct VideoListView: View {
             }
             
             // Video list
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 12) {
                     ForEach(batchManager.videoItems) { item in
                         VideoItemRow(item: item, onRemove: {
@@ -468,12 +476,12 @@ struct FooterControlsView: View {
                     
                     if hasCompleted {
                         ActionButton(
-                            icon: "arrow.down.doc.fill",
-                            title: "Save as ZIP",
+                            icon: "folder.badge.plus",
+                            title: "Save All to Folder",
                             gradient: [.green, .mint],
                             isHovered: hoveredButton == "save"
                         ) {
-                            batchManager.saveAllAsZip()
+                            batchManager.saveAllToFolder()
                         }
                         .onHover { hoveredButton = $0 ? "save" : nil }
                     }
